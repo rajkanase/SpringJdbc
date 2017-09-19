@@ -1,5 +1,6 @@
 package com.raj.spring.FirstSpringApp.studentimpl;
 
+import com.raj.spring.FirstSpringApp.model.Customer;
 import com.raj.spring.FirstSpringApp.model.Order;
 import com.raj.spring.FirstSpringApp.model.Student;
 import com.raj.spring.FirstSpringApp.repository.StudentRepo;
@@ -86,7 +87,20 @@ public class StudentImpl implements StudentRepo{
 
     @Override
     public void insertJoinData(Order ord) {
-        ord.
+
+        String sql="select * from customer_table where id=?";
+        List<Map<String, Object>> li_cust=jdbcTemplate.queryForList(sql,new Object[]{ord.getId()});
+
+        String sql1="insert into order_table(id,ordernumber,customerid,totalamount) values(?,?,?,?)";
+        jdbcTemplate.update(sql1,new Object[]{
+                ord.getId(),ord.getOrdernumber(),ord.getCustid(),ord.getTotalamt()
+        });
+
+
+        String sql2="insert into customer_table(id,firstname,lastname,city) values(?,?,?,?)";
+        jdbcTemplate.update(sql2,new Object[]{
+                ord.getCust().getId(),ord.getCust().getFirstname(),ord.getCust().getLastname(),ord.getCust().getCity()
+        });
     }
 
 

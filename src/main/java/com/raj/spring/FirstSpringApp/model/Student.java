@@ -1,7 +1,7 @@
 package com.raj.spring.FirstSpringApp.model;
 
 public class Student {
-    int id;
+    Integer id;
     String name;
 
     @Override
